@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../attendance-service/attendance-service.html">
 <dom-module id="login-service">
   <template>
    <iron-ajax
@@ -36,7 +37,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
- 
+ <attendance-service id="service"></attendance-service>
   </template>
 
   <script>
@@ -106,6 +107,7 @@
         sessionStorage.setItem("userinfo",role);
         document.querySelector('attendance-app').setPage("applist");
         document.querySelector('app-list').setPage("addattendence","Attendance");
+         this.$.service.getroute();
       }
      
       else 

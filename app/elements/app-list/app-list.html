@@ -4,7 +4,7 @@
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../addattendence-card/addattendence-card.html">
 <link rel="import" href="../attendancepresent-card/attendancepresent-card.html">
-
+<link rel="import" href="../attendance-service/attendance-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
   <dom-module id="app-list">
   <template>
@@ -40,6 +40,7 @@
           </iron-pages>
        </div>
        <div class="footer"></div>
+       <attendance-service id="service"></attendance-service>
   </template>
   <script>
   Polymer({
@@ -51,6 +52,7 @@
    {
     this.page="addattendence";
     this.title="Attendance";
+     this.$.service.getroute();
     // document.querySelector('attendance-service').getroute();
     //document.querySelector('addattendence-card').setroute();
    }

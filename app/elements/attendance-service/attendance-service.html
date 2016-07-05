@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          if(sessionStorage.getItem("route")!=null)
         {
           //alert('d');
-        document.querySelector('addattendence-card').selectroute=sessionStorage.getItem("route");
+        document.querySelector('addattendence-card').setroute();
       }
       },
        getstudentsforattendance:function(route,trip,pickupordrop){

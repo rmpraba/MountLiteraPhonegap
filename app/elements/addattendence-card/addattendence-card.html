@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="drop">
         <div class="field">
           <paper-dropdown-menu label="Route">
-            <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" selected="{{selectroute}}" >
+            <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" selected="{{selectroute}}">
               <template  is="dom-repeat" items="{{routes}}" as="view">
                 <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
@@ -110,32 +110,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'addattendence-card',
       ready:function(){
         //alert('hi');
-        this.$.service.getroute();
+       
         this.$.headatt.hidden=true;
         this.$.submitatten.hidden=true;
         this.$.drop.hidden=false;
+
        
       },
       setroute:function()
       {
        if(sessionStorage.getItem("route")!=null)
         {
-          //alert('cs');
+          
           this.selectroute=sessionStorage.getItem("route");
+          //alert(this.selectroute);
         }
       },
-      routeid:function(e){
+      routeid:function(e)
+      {
         routeid = (e.target.selectedItem.textContent).trim();
-         sessionStorage.setItem("route",routeid);
+         sessionStorage.setItem("route",this.selectroute);
+        // alert(this.selectroute);
 
       },
-      Fntrip:function(e){
+      Fntrip:function(e)
+      {
         trip = (e.target.selectedItem.textContent).trim();
       },
-      Fnpickordrop:function(e){
+      Fnpickordrop:function(e)
+      {
         pickupordrop =(e.target.selectedItem.textContent).trim();
       },
-      show:function(e){
+      show:function(e)
+      {
         this.$.service.getstudentsforattendance(routeid,trip,pickupordrop);
         this.$.headatt.hidden=false;
         this.$.submitatten.hidden=false;
