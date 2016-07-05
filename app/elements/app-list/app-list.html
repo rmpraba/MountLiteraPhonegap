@@ -68,7 +68,8 @@
  signout:function()
  {
   window.location.href="../index.html";
-
+ sessionStorage.setItem("userinfo",null);
+  sessionStorage.setItem("route",null);
    //document.querySelector('app-card').setPage("loginpage");
  },
  
