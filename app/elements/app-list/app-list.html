@@ -46,18 +46,15 @@
     is: "app-list",
     ready: function() {
    var name=sessionStorage.getItem("userinfo");
+   //alert(name);
+   if(name=="Attender")
+   {
+    this.page="addattendence";
+    this.title="Attendance";
+    // document.querySelector('attendance-service').getroute();
+    //document.querySelector('addattendence-card').setroute();
+   }
    var currpage=localStorage.getItem("curr_sess_page");
-   if(name=="Transport Admin")  {
-    
-  }
-  else if(name=="Accounts Admin"){
-   this.page="accountadmin";
-   
-  }
-  else if(name=="Admin Manager"){
-   this.page="adminmanager";
-  
-  }
   },
   setPage:function(page,title){
     //alert(page);

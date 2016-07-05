@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="drop">
         <div class="field">
           <paper-dropdown-menu label="Route">
-            <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" >
+            <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" selected="{{selectroute}}" >
               <template  is="dom-repeat" items="{{routes}}" as="view">
                 <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
@@ -114,9 +114,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.headatt.hidden=true;
         this.$.submitatten.hidden=true;
         this.$.drop.hidden=false;
+       
+      },
+      setroute:function()
+      {
+       if(sessionStorage.getItem("route")!=null)
+        {
+          //alert('cs');
+          this.selectroute=sessionStorage.getItem("route");
+        }
       },
       routeid:function(e){
         routeid = (e.target.selectedItem.textContent).trim();
+         sessionStorage.setItem("route",routeid);
+
       },
       Fntrip:function(e){
         trip = (e.target.selectedItem.textContent).trim();
@@ -166,6 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //document.getElementById("submitbutton").style.background="grey";
            },
           click:function(){
+            //alert('call');
             this.$.service.submitattendance(itemarray);
             //itemarray=[];
             //document.querySelector('#gradeselect').selected=-1;

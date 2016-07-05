@@ -37,8 +37,18 @@
     ready: function() 
     {
     this.$.addressajax.generateRequest();
-    
+     var name=sessionStorage.getItem("userinfo");
+   //alert(name);
+   if(name=="Attender")
+   {
+    //alert('dd');
+    this.page="applist";
+   }
+   else
+   {
+
       this.page="loginpage";
+    }
     
   },
   addressResponse:function(e)

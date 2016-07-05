@@ -81,6 +81,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         route=e1.detail.response.returnval;
         //alert(a2);
         document.querySelector('addattendence-card').routes=route;
+         if(sessionStorage.getItem("route")!=null)
+        {
+          //alert('d');
+        document.querySelector('addattendence-card').selectroute=sessionStorage.getItem("route");
+      }
       },
        getstudentsforattendance:function(route,trip,pickupordrop){
       if(pickupordrop=="Pickup"){
@@ -113,8 +118,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
             //alert(JSON.stringify(result));
+
             stulen=result.length;
             document.querySelector('addattendence-card').attendancearr=result;
+            for(var i=0;i<result.length;i++)
+            {
+              document.querySelector('addattendence-card').FnGetItemsz(result[i].student_id, result[i].name);
+            }
+            
         }
       },
       getstudentsforattendancedropResponse:function(e)
@@ -122,11 +133,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
+
         if(JSON.stringify(result) == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
            stulen=result.length;
             document.querySelector('addattendence-card').attendancearr=result;
+            for(var i=0;i<result.length;i++)
+            {
+              document.querySelector('addattendence-card').FnGetItemsz(result[i].student_id, result[i].name);
+            }
         }
       },
 submitattendance:function(itemarr){
@@ -150,7 +166,8 @@ submitattendance:function(itemarr){
     },
     submitattendanceResponse:function(e){
         var res=e.detail.response.returnval;
-        //alert(lenx+'    '+int);
+
+        //alert(lenx+'    '+int+''+res);
         var absent;
         if(res=='success')
         {
