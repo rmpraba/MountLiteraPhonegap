@@ -62,22 +62,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+        <br/>
         <div class="trip">
-          <paper-dropdown-menu label="Select the Trip">
+         Pickup <paper-checkbox style="margin-left: 3%" id="pickup"  class="checkbox" on-change="pickupHandler"></paper-checkbox>
+         Drop <paper-checkbox style="margin-left: 3%" id="dropp"  class="checkbox" on-change="dropHandler"></paper-checkbox>
+       
+         <!-- <paper-dropdown-menu label="Select the Trip">
             <paper-menu id="tripsz" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
                 <paper-item value="1">1</paper-item>
                 <paper-item value="2">2</paper-item>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu>-->
         </div>
+        <br/>
         <div class="drop-down" >
-          <paper-dropdown-menu label="Select PickUp or Drop">
+          Trip 1 <paper-checkbox style="margin-left: 3%" id="trip1"  class="checkbox" on-change="trip1Handler"></paper-checkbox>
+         Trip 2 <paper-checkbox style="margin-left: 3%" id="trip2"  class="checkbox" on-change="trip2Handler"></paper-checkbox>
+         <!-- <paper-dropdown-menu label="Select PickUp or Drop">
             <paper-menu id="pickdropzz" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
               <paper-item value="pickup">Pickup</paper-item>
               <paper-item value="drop">Drop</paper-item>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu>-->
         </div>
+        <br/>
         <div class="button">
           <paper-button on-click="show">Submit</paper-button>
         </div>
@@ -114,6 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.headatt.hidden=true;
         this.$.submitatten.hidden=true;
         this.$.drop.hidden=false;
+  
 
        
       },
@@ -125,6 +134,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.selectroute=sessionStorage.getItem("route");
           //alert(this.selectroute);
         }
+         var d = new Date();
+    var n = d.getHours();
+    if(n>12)
+    {
+     
+       document.querySelector("#dropp").checked=true;
+        pickupordrop="Drop";
+    }
+    else
+    {
+      
+       document.querySelector("#pickup").checked=true;
+        pickupordrop="Pickup";
+    }
       },
       routeid:function(e)
       {
@@ -137,9 +160,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         trip = (e.target.selectedItem.textContent).trim();
       },
+      trip1Handler:function(e)
+      {
+          if(e.target.checked==true)
+        {
+          document.querySelector("#trip2").checked=false;
+          trip="1";
+        }
+
+      },
+      trip2Handler:function(e)
+      {
+          if(e.target.checked==true)
+        {
+
+          document.querySelector("#trip1").checked=false;
+          trip="2";
+        }
+      },
       Fnpickordrop:function(e)
       {
         pickupordrop =(e.target.selectedItem.textContent).trim();
+      },
+      pickupHandler:function(e)
+      {
+          if(e.target.checked==true)
+        {
+         
+          document.querySelector("#dropp").checked=false;
+          pickupordrop="Pickup";
+        }
+
+      },
+      dropHandler:function(e)
+      {
+       if(e.target.checked==true)
+        {
+          
+          document.querySelector("#pickup").checked=false;
+          pickupordrop="Drop";
+        }
       },
       show:function(e)
       {
