@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-dropdown-menu>
         </div>
         <br/>
-        <div class="trip">
+        <div class="trip" style="padding:2%;">
          Pickup <paper-checkbox style="margin-left: 3%" id="pickup"  class="checkbox" on-change="pickupHandler"></paper-checkbox>
          Drop <paper-checkbox style="margin-left: 3%" id="dropp"  class="checkbox" on-change="dropHandler"></paper-checkbox>
        
@@ -75,9 +75,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-dropdown-menu>-->
         </div>
         <br/>
-        <div class="drop-down" >
-          Trip 1 <paper-checkbox style="margin-left: 3%" id="trip1"  class="checkbox" on-change="trip1Handler"></paper-checkbox>
-         Trip 2 <paper-checkbox style="margin-left: 3%" id="trip2"  class="checkbox" on-change="trip2Handler"></paper-checkbox>
+        <div class="drop-down" style="padding:2%;">
+          <span>
+            Trip 1 <paper-checkbox style="margin-left: 4%" id="trip1"  class="checkbox" on-change="trip1Handler"></paper-checkbox>
+          </span>
+          <span>
+            Trip 2 <paper-checkbox style="margin-left: 3%" id="trip2"  class="checkbox" on-change="trip2Handler"></paper-checkbox>
+          </span>
          <!-- <paper-dropdown-menu label="Select PickUp or Drop">
             <paper-menu id="pickdropzz" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
               <paper-item value="pickup">Pickup</paper-item>
