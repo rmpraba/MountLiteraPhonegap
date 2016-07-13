@@ -88,12 +88,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       },
        getstudentsforattendance:function(route,trip,pickupordrop){
+
+        var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+              dd='0'+dd
+            }
+            if(mm<10) {
+              mm='0'+mm
+            }
+            today = dd+'/'+mm+'/'+yyyy;
       if(pickupordrop=="Pickup"){
         this.getstudentsforattendancepickupurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancepickup";
-        var obj={"routeid":"","tripid":"","schol":""}
+        var obj={"routeid":"","tripid":"","schol":"","todate":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=route;
         obj.tripid=trip;
+        obj.todate=today;
         this.getstudentsforattendancepickupparam=obj;
         //alert(JSON.stringify(obj));
         //alert(JSON.stringify(obj));
@@ -101,10 +114,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getstudentsforattendancepickupajax.generateRequest();
       } else {
         this.getstudentsforattendancedropurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancedrop";
-        var obj={"routeid":"","tripid":"","schol":""}
+        var obj={"routeid":"","tripid":"","schol":"","todate":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=route;
         obj.tripid=trip;
+        obj.todate=today;
         //alert(JSON.stringify(obj));
         this.getstudentsforattendancedropparam=obj;
         this.$.getstudentsforattendancedropajax.generateRequest();
@@ -114,8 +128,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
-        if(JSON.stringify(result) == 'invalid'){
+        if(result == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
+
         } else {
             //alert(JSON.stringify(result));
 
@@ -134,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
 
-        if(JSON.stringify(result) == 'invalid'){
+        if(result == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
            stulen=result.length;

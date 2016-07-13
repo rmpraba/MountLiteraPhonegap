@@ -48,6 +48,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 2% 0;
         box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
       }
+      .backbutton
+      {
+        width: 10%;
+        height: 5%;
+      }
       .students-atten:nth-child(even) {background: #CCC};
       .students-atten:nth-child(odd) {background: #FFF};
     </style>
@@ -64,9 +69,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <br/>
         <div class="trip" style="padding:2%;">
-         Pickup <paper-checkbox style="margin-left: 3%" id="pickup"  class="checkbox" on-change="pickupHandler"></paper-checkbox>
-         Drop <paper-checkbox style="margin-left: 3%" id="dropp"  class="checkbox" on-change="dropHandler"></paper-checkbox>
-       
+        <!-- Pickup <paper-checkbox style="margin-left: 3%" id="pickup"  class="checkbox" on-change="pickupHandler"></paper-checkbox>
+         Drop <paper-checkbox style="margin-left: 3%" id="dropp"  class="checkbox" on-change="dropHandler"></paper-checkbox>-->
+       <paper-icon-button class="backbutton" src="../../images/pickup.gif" on-click="pickupHandler"></paper-icon-button>
+       <paper-icon-button class="backbutton" src="../../images/droppt.gif" on-click="dropHandler"></paper-icon-button>
          <!-- <paper-dropdown-menu label="Select the Trip">
             <paper-menu id="tripsz" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
                 <paper-item value="1">1</paper-item>
@@ -101,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <template is="dom-repeat" items="{{attendancearr}}" as="view">
         <div class="students-atten">
-          <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
+          <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" allopoint="{{view.point}}" ></addattendance-item-card>
         </div>
       </template>
       <div class="button">
@@ -143,13 +149,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if(n>12)
     {
      
-       document.querySelector("#dropp").checked=true;
+       //document.querySelector("#dropp").checked=true;
         pickupordrop="Drop";
     }
     else
     {
       
-       document.querySelector("#pickup").checked=true;
+       //document.querySelector("#pickup").checked=true;
         pickupordrop="Pickup";
     }
       },
@@ -188,22 +194,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       pickupHandler:function(e)
       {
-          if(e.target.checked==true)
+        pickupordrop="Pickup";
+        /*  if(e.target.checked==true)
         {
          
           document.querySelector("#dropp").checked=false;
           pickupordrop="Pickup";
-        }
+        }*/
 
       },
       dropHandler:function(e)
       {
-       if(e.target.checked==true)
+        pickupordrop="Drop";
+
+       /*if(e.target.checked==true)
         {
           
           document.querySelector("#pickup").checked=false;
           pickupordrop="Drop";
-        }
+        }*/
       },
       show:function(e)
       {
