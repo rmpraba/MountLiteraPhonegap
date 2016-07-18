@@ -62,9 +62,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var route;
-    var lenx;
+    var len;
      var int=1;
      var stulen;
+     var present=0;
+     var absent=0;
 
     Polymer({
       is: 'attendance-service',
@@ -161,17 +163,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 submitattendance:function(itemarr){
-        var len=itemarr.length;
-        lenx=len;
+         len=itemarr.length;
         var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"","schol":""};
-        for(var i=0;i<itemarr.length;i++){
+        for(var i=0;i<itemarr.length;i++)
+        {
+          if(itemarr[i].status==1)
+          {
+            present++;
+          }
+          else
+          {
+            absent++;
+          }
             obj.studentid=itemarr[i].studentid;
             obj.student_name = itemarr[i].student_name;
             obj.routeid=itemarr[i].routeid;
             obj.trip=itemarr[i].trip;
             obj.pickupordrop=itemarr[i].pickupordrop;
             obj.date=itemarr[i].date;
-            obj.status=1;
+            obj.status=itemarr[i].status;
             obj.schol=sessionStorage.getItem("sch");;
             this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/attsubmiturl";
             this.submitattendanceparam=obj;
@@ -179,28 +189,30 @@ submitattendance:function(itemarr){
             //alert(JSON.stringify(obj));
         }
     },
-    submitattendanceResponse:function(e){
+    submitattendanceResponse:function(e)
+    {
         var res=e.detail.response.returnval;
 
         //alert(lenx+'    '+int+''+res);
-        var absent;
+        
         if(res=='success')
         {
             int=int+1;
         
-            if(lenx==int)
+            if(len==int)
             {
-              absent=stulen-int;
+      
             alert('Attendance of '+int+' student is marked successfully'); 
             document.querySelector('app-list').setPage("attendancepresent","Attendance");  
             document.querySelector('attendancepresent-card').total=stulen; 
-            document.querySelector('attendancepresent-card').present=int;
+            document.querySelector('attendancepresent-card').present=present;
                document.querySelector('attendancepresent-card').absent=absent;
             document.querySelector('addattendence-card').FnClear();      
             }
             
         }
-        else{
+        else
+        {
          alert('Attendance is not marked');   
         }
         

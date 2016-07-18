@@ -225,6 +225,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FnGetItemsz:function(studentid, student_name)
            {
+            for(var i=0;i<itemarray.length;i++)
+            {
+              if(studentid==itemarray[i].studentid)
+              {
+                itemarray.splice(i,1);
+              }
+            }
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1;
@@ -236,28 +243,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               mm='0'+mm
             }
             today = dd+'/'+mm+'/'+yyyy;
-            var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"" };
+            var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"" };
             obj.studentid=studentid;
             obj.student_name = student_name;
             obj.routeid = routeid;
             obj.trip=trip;
             obj.date=today;
             obj.pickupordrop = pickupordrop;
+            obj.status=1;
             itemarray.push(obj);
             //alert(JSON.stringify(itemarray));
             //this.$.submitbutton.disabled=false;
             //document.getElementById("submitbutton").style.background="black";
           },
-          removestud:function(std){
-            for(var i=0;i<itemarray.length;i++){
-              if(std==itemarray[i].studentid){
+          removestud:function(std,stdname)
+          {
+
+            for(var i=0;i<itemarray.length;i++)
+            {
+              if(std==itemarray[i].studentid)
+              {
                 itemarray.splice(i,1);
               }
             }
-          //this.$.submitbutton.disabled=true;
-          //document.getElementById("submitbutton").style.background="grey";
+           var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10)
+             {
+              dd='0'+dd
+             }
+            if(mm<10)
+             {
+              mm='0'+mm
+             }
+            today = dd+'/'+mm+'/'+yyyy;
+            var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"" };
+            obj.studentid=std;
+            obj.student_name = stdname;
+            obj.routeid = routeid;
+            obj.trip=trip;
+            obj.date=today;
+            obj.pickupordrop = pickupordrop;
+            obj.status=0;
+            itemarray.push(obj);
            },
-          click:function(){
+          click:function()
+          {
             //alert('call');
             this.$.service.submitattendance(itemarray);
             //itemarray=[];
