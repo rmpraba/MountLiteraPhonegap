@@ -62,9 +62,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var route;
-    var lenx;
+    var len;
      var int=1;
      var stulen;
+     var present=0;
+     var absent=0;
 
     Polymer({
       is: 'attendance-service',
@@ -88,12 +90,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       },
        getstudentsforattendance:function(route,trip,pickupordrop){
+
+        var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+              dd='0'+dd
+            }
+            if(mm<10) {
+              mm='0'+mm
+            }
+            today = dd+'/'+mm+'/'+yyyy;
       if(pickupordrop=="Pickup"){
         this.getstudentsforattendancepickupurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancepickup";
-        var obj={"routeid":"","tripid":"","schol":""}
+        var obj={"routeid":"","tripid":"","schol":"","todate":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=route;
         obj.tripid=trip;
+        obj.todate=today;
         this.getstudentsforattendancepickupparam=obj;
         //alert(JSON.stringify(obj));
         //alert(JSON.stringify(obj));
@@ -101,10 +116,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getstudentsforattendancepickupajax.generateRequest();
       } else {
         this.getstudentsforattendancedropurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancedrop";
-        var obj={"routeid":"","tripid":"","schol":""}
+        var obj={"routeid":"","tripid":"","schol":"","todate":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=route;
         obj.tripid=trip;
+        obj.todate=today;
         //alert(JSON.stringify(obj));
         this.getstudentsforattendancedropparam=obj;
         this.$.getstudentsforattendancedropajax.generateRequest();
@@ -114,8 +130,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
-        if(JSON.stringify(result) == 'invalid'){
+        if(result == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
+
         } else {
             //alert(JSON.stringify(result));
 
@@ -134,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
 
-        if(JSON.stringify(result) == 'invalid'){
+        if(result == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
            stulen=result.length;
@@ -146,17 +163,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 submitattendance:function(itemarr){
-        var len=itemarr.length;
-        lenx=len;
+         len=itemarr.length;
         var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"","schol":""};
-        for(var i=0;i<itemarr.length;i++){
+        for(var i=0;i<itemarr.length;i++)
+        {
+          if(itemarr[i].status==1)
+          {
+            present++;
+          }
+          else
+          {
+            absent++;
+          }
             obj.studentid=itemarr[i].studentid;
             obj.student_name = itemarr[i].student_name;
             obj.routeid=itemarr[i].routeid;
             obj.trip=itemarr[i].trip;
             obj.pickupordrop=itemarr[i].pickupordrop;
             obj.date=itemarr[i].date;
-            obj.status=1;
+            obj.status=itemarr[i].status;
             obj.schol=sessionStorage.getItem("sch");;
             this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/attsubmiturl";
             this.submitattendanceparam=obj;
@@ -164,28 +189,30 @@ submitattendance:function(itemarr){
             //alert(JSON.stringify(obj));
         }
     },
-    submitattendanceResponse:function(e){
+    submitattendanceResponse:function(e)
+    {
         var res=e.detail.response.returnval;
 
         //alert(lenx+'    '+int+''+res);
-        var absent;
+        
         if(res=='success')
         {
             int=int+1;
         
-            if(lenx==int)
+            if(len==int)
             {
-              absent=stulen-int;
+      
             alert('Attendance of '+int+' student is marked successfully'); 
             document.querySelector('app-list').setPage("attendancepresent","Attendance");  
             document.querySelector('attendancepresent-card').total=stulen; 
-            document.querySelector('attendancepresent-card').present=int;
+            document.querySelector('attendancepresent-card').present=present;
                document.querySelector('attendancepresent-card').absent=absent;
             document.querySelector('addattendence-card').FnClear();      
             }
             
         }
-        else{
+        else
+        {
          alert('Attendance is not marked');   
         }
         

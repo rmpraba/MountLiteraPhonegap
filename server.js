@@ -96,8 +96,8 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
    var schoolx={"school_id":req.query.schol};
      var route_id={"pickup_route_id":req.query.routeid};
    //console.log(req.query.routeid);
-   var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and pickup_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
-     console.log(query);
+   var query="SELECT (select pickup_seq from point where id= p.drop_point ) as seq, (select point_name from point where id=p.pickup_point order by pickup_seq)as point, p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p  where school_id ='"+req.query.schol+"' and pickup_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"' and pickup_route_id not in(select id from route where route_name in (select route_id from attendance where att_date='"+req.query.todate+"' and route_id='"+req.query.routeid+"')) group by pickup_point order by seq";
+     //console.log(query);
      connection.query(query,
      function(err, rows){
      if(!err){
@@ -118,8 +118,8 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
    var tripid={"school_type":req.query.tripid};
    var schoolx={"school_id":req.query.schol};
      var route_id={"drop_route_id":req.query.routeid};
-   //console.log(req.query.routeid);
-   var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and drop_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
+   console.log(req.query.routeid);
+   var query="SELECT (select drop_seq from point where id= p.drop_point ) as seq, (select point_name from point where id= p.drop_point ) as point, p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and drop_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"' and drop_route_id not in(select id from route where route_name in (select route_id from attendance where att_date='"+req.query.todate+"' and route_id='"+req.query.routeid+"')) group by drop_point order by seq";
    connection.query(query,
      function(err, rows){
      if(!err){

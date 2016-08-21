@@ -63,7 +63,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="attenphoto">
           <img src="../../images/{{studentid}}.jpg" onerror="this.src='../../images/student_avatar.png'" />
         </div>
+        <div class="attpoint"><p>{{allopoint}}</p></div>
         <div class="attname"><p>{{student}}</p></div>
+
         <div class="attencheck"><paper-checkbox  id="{{studentid}}" checked on-change="changeHandler"></paper-checkbox></div>
       </div>
   </template>
@@ -87,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         else
         {
-          document.querySelector('addattendence-card').removestud(this.studentid);
+          document.querySelector('addattendence-card').removestud(this.studentid,this.student);
         }
     }
     });
