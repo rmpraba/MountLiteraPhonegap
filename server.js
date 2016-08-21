@@ -199,6 +199,27 @@ app.post('/attendancerecord' ,  urlencodedParser,function (req, res)
 
 
 
+app.post('/checkrecord' ,  urlencodedParser,function (req, res)
+{
+      var schol={"school_id":req.query.schol};
+      var route={"route_id":req.query.routeid};
+      var mode={"mode_of_travel":req.query.pickupordrop};
+      var trip={"trip":req.query.trip};
+      var date={"att_date":req.query.date};
+      var status={"status":req.query.status};//console.log(schoolx);
+      connection.query('select * from att_record where ? and ? and ? and ? and ? and ?',[schol,route,mode,trip,date,status],
+        function(err, rows)
+        {
+      if(!err)
+      {
+      res.status(200).json({'returnval': 'success'});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");
