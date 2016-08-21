@@ -6,6 +6,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../login-card/login-card.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../addphoto-card/addphoto-card.html">
 
 
 <dom-module id="attendance-app">
@@ -18,6 +19,9 @@
         <section data-category="applist">
           <app-list></app-list>
         </section>
+        <section data-category="addphoto">
+            <addphoto-card></addphoto-card>
+          </section>
            </iron-pages>
             <iron-ajax
         auto
@@ -47,7 +51,7 @@
    else
    {
 
-      this.page="loginpage";
+      this.page="addphoto";
     }
     
   },
