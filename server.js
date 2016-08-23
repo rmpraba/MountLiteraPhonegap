@@ -212,7 +212,7 @@ app.post('/checkrecord' ,  urlencodedParser,function (req, res)
         {
       if(!err)
       {
-      res.status(200).json({'returnval': 'success'});
+      res.status(200).json({'returnval': rows });
       }
       else
       {
