@@ -136,9 +136,9 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
    });
  });
 app.post('/attsubmiturl',  urlencodedParser,function (req, res){
-   var collection={"school_id":req.query.schol,"student_id":req.query.studentid,"student_name":req.query.student_name,"route_id":req.query.routeid,"mode_of_travel":req.query.pickupordrop,"trip":req.query.trip,"att_date":req.query.date,"status":req.query.status};
+   
    //console.log(collection);
-   connection.query('insert into attendance set ?',[collection],
+   connection.query('INSERT INTO `attendance`(`school_id`, `student_id`, `student_name`, `route_id`, `mode_of_travel`, `trip`, `att_date`, `status`) VALUES ('+req.query.schol+','+req.query.studentid+',(select student_name from student_details where id='+req.query.studentid+'and school_id='+req.query.schol+'),'+req.query.routeid+','+req.query.pickupordrop+','+req.query.trip+','+req.query.date+','+req.query.status+')',[collection],
      function(err, rows){
  
        if(!err)
