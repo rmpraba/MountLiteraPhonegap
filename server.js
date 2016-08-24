@@ -53,12 +53,12 @@ app.post('/login-card',  urlencodedParser,function (req, res)
     {
     if(rows.length>0)
     {
-
-      res.status(200).json({'returnval': rows});
+        console.log(rows);
+      res.status(200).json({'returnval': rows });
     }
     else
     {
-
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
   }
@@ -70,6 +70,32 @@ app.post('/getroute' ,  urlencodedParser,function (req, res)
     var schoolx={"school_id":req.query.schol};
     //console.log(schoolx);
       connection.query('select * from route where ?',[schoolx],
+        function(err, rows)
+        {
+        if(!err)
+    {
+      if(rows.length>0)
+      {
+        //console.log(rows);
+      res.status(200).json({'returnval': rows});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
+
+app.post('/getschool' ,  urlencodedParser,function (req, res)
+{
+    //var schoolx={"school_id":req.query.schol};
+    //console.log(schoolx);
+      connection.query('select * from md_school',
         function(err, rows)
         {
         if(!err)
