@@ -164,7 +164,7 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
 app.post('/attsubmiturl',  urlencodedParser,function (req, res){
    
    //console.log(collection);
-   connection.query('INSERT INTO `attendance`(`school_id`, `student_id`, `student_name`, `route_id`, `mode_of_travel`, `trip`, `att_date`, `status`) VALUES ('+req.query.schol+','+req.query.studentid+',(select student_name from student_details where id='+req.query.studentid+'and school_id='+req.query.schol+'),'+req.query.routeid+','+req.query.pickupordrop+','+req.query.trip+','+req.query.date+','+req.query.status+')',[collection],
+   connection.query("INSERT INTO `attendance`(`school_id`, `student_id`, `student_name`, `route_id`, `mode_of_travel`, `trip`, `att_date`, `status`) VALUES ('"+req.query.schol+"','"+req.query.studentid+"',(select student_name from student_details where id='"+req.query.studentid+"'and school_id='"+req.query.schol+"'),'"+req.query.routeid+"','"+req.query.pickupordrop+"','"+req.query.trip+"','"+req.query.date+"','"+req.query.status+"')",
      function(err, rows){
  
        if(!err)
